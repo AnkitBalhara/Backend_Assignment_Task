@@ -13,6 +13,7 @@ app.use(
     credentials: true, // Allow credentials if you need them in the future
   })
 );
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const userModel = require("./models/userModel");
@@ -44,6 +45,7 @@ app.post("/registeruser", async (req, res) => {
           email,
           password: hash,
         });
+
         res
           .status(201)
           .json({ message: "User registered successfully", userData });
@@ -66,14 +68,48 @@ app.post("/login/findUser", async (req, res) => {
     // console.log(result)
     if (!result) {
       return res.status("400").json({ error: "Password mismatch.." });
-    }else{
-
-      res.send("Jai Shree Ram");
+    } else {
+      let token = jwt.sign({ email: email, userId: userDetails._id }, "secretkey");
+      res.cookie("token", token);
+      res.redirect("/proflepage")
     }
   });
-
-  // const id = userDetails._id;
 });
+
+
+app.get("/profilepage", isSignedIn, async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Send only the username and email in response
+    res.json({ username: user.username, email: user.email });
+  } catch (error) {
+    console.error("Error fetching profile data:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Logout Route..
+app.get("/logout",isSignedIn,(req,res)=>{
+  res.cookie("token","")
+  // res.clearCookie("token");
+  res.end()
+})
+
+// Middleware:-
+function isSignedIn(req, res, next) {
+  if (req.cookies.token === "" || !req.cookies.token) {
+    res.redirect("/login/findUser");
+  } else {
+    let data = jwt.verify(req.cookies.token, "secretkey");
+    console.log(data);
+    req.user = data;
+    next();
+  }
+}
 
 app.listen(3000, () => {
   console.log("Server Started");

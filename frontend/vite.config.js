@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       "/login/findUser": "http://localhost:3000",
       "/registeruser": "http://localhost:3000",
+      "/profilepage": "http://localhost:3000",
     },
   },
 });
