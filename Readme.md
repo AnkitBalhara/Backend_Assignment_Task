@@ -1,3 +1,4 @@
+# User Management and Location Tracking Application
 This project is a full-stack application that provides a user registration and login system, user profile management, and real-time location tracking functionality. It utilizes a React frontend, Express.js backend, MongoDB for data storage, and Socket.IO for real-time updates.
 
 ## Features
