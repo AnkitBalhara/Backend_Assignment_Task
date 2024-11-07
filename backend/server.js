@@ -69,13 +69,15 @@ app.post("/login/findUser", async (req, res) => {
     if (!result) {
       return res.status("400").json({ error: "Password mismatch.." });
     } else {
-      let token = jwt.sign({ email: email, userId: userDetails._id }, "secretkey");
+      let token = jwt.sign(
+        { email: email, userId: userDetails._id },
+        "secretkey"
+      );
       res.cookie("token", token);
-      res.redirect("/proflepage")
+      res.redirect("/proflepage");
     }
   });
 });
-
 
 app.get("/profilepage", isSignedIn, async (req, res) => {
   try {
@@ -93,11 +95,17 @@ app.get("/profilepage", isSignedIn, async (req, res) => {
 });
 
 // Logout Route..
-app.get("/logout",isSignedIn,(req,res)=>{
-  res.cookie("token","")
-  // res.clearCookie("token");
-  res.end()
-})
+// app.get("/logout", isSignedIn, (req, res) => {
+//   // res.cookie("token","")
+//   res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
+//   res.end();
+// });
+
+app.get("/logout", (req, res) => {
+  res.clearCookie("token", { httpOnly: true, sameSite: "lax", path: "/" });
+  res.status(200).json({ message: "Logged out and cookie cleared" });
+});
+
 
 // Middleware:-
 function isSignedIn(req, res, next) {

@@ -9,6 +9,7 @@ export default defineConfig({
       "/login/findUser": "http://localhost:3000",
       "/registeruser": "http://localhost:3000",
       "/profilepage": "http://localhost:3000",
+      "/logiut": "http://localhost:3000",
     },
   },
 });

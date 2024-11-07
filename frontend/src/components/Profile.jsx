@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
   const [data, setData] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -15,16 +17,18 @@ const Profile = () => {
       });
   }, []);
 
+  
+
+
   const logout = () => {
     axios
-      .post("/logout", {}, { withCredentials: true })
-      .then(() => {
-        window.location.href = "/login";
-      })
-      .catch((error) => {
-        console.log("Logout failed:", error);
-      });
-  };
+    .get("/logout", { withCredentials: true })
+    .then(() => {
+      navigate("/login");
+    })
+    .catch((error) => {
+      console.log("Logout failed:", error);
+    });  };
 
   return (
     <div className="flex  flex-col items-center min-h-screen bg-gray-100">
