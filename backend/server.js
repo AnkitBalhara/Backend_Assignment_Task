@@ -10,9 +10,10 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     methods: "GET,POST",
-    credentials: true, // Allow credentials if you need them in the future
+    credentials: true, // This must be enabled to allow cookies to be sent and received
   })
 );
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,20 +62,24 @@ app.post("/login/findUser", async (req, res) => {
   const { email, password } = req.body;
   const userDetails = await userModel.findOne({ email });
   if (!userDetails) {
-    return res.status("400").json({ error: "No email exists.." });
+    return res.status(400).json({ error: "No email exists.." });
   }
 
   bcrypt.compare(password, userDetails.password, (err, result) => {
-    // console.log(result)
     if (!result) {
-      return res.status("400").json({ error: "Password mismatch.." });
+      return res.status(400).json({ error: "Password mismatch.." });
     } else {
       let token = jwt.sign(
         { email: email, userId: userDetails._id },
         "secretkey"
       );
-      res.cookie("token", token);
-      res.redirect("/proflepage");
+      // Set the token as a cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: false,
+      }); 
+      res.status(200).json({ message: "Login successful" });
     }
   });
 });
@@ -95,17 +100,25 @@ app.get("/profilepage", isSignedIn, async (req, res) => {
 });
 
 // Logout Route..
-// app.get("/logout", isSignedIn, (req, res) => {
-//   // res.cookie("token","")
-//   res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
-//   res.end();
-// });
-
 app.get("/logout", (req, res) => {
+  console.log("Clearing cookie...");
   res.clearCookie("token", { httpOnly: true, sameSite: "lax", path: "/" });
-  res.status(200).json({ message: "Logged out and cookie cleared" });
+  res.status(200).json({ message: "Logged out and token removed" });
 });
 
+app.get("/profilepage", isSignedIn, async (req, res) => {
+  res.set("Cache-Control", "no-store");
+  try {
+    const user = await userModel.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({ username: user.username, email: user.email });
+  } catch (error) {
+    console.error("Error fetching profile data:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 // Middleware:-
 function isSignedIn(req, res, next) {
@@ -113,7 +126,7 @@ function isSignedIn(req, res, next) {
     res.redirect("/login/findUser");
   } else {
     let data = jwt.verify(req.cookies.token, "secretkey");
-    console.log(data);
+    // console.log(data);
     req.user = data;
     next();
   }

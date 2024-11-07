@@ -19,7 +19,7 @@ const RegisterPage = () => {
       })
       .then((response) => {
         console.log("User registered successfully");
-        navigate("/profile", { state: { username, email } });
+        navigate("/login", { state: { username, email } });
       })
       .catch((error) => {
         if (error.response && error.response.data) {
