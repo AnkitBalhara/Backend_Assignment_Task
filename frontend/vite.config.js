@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/login/findUser": "https://backend-assignment-task.vercel.app/",
-      "/registeruser": "https://backend-assignment-task.vercel.app/",
-      "/profilepage": "https://backend-assignment-task.vercel.app/",
-      "/logout": "https://backend-assignment-task.vercel.app/",
+      "/login/findUser": "https://backend-assignment-task-pyby.vercel.app/",
+      "/registeruser": "https://backend-assignment-task-pyby.vercel.app/",
+      "/profilepage": "https://backend-assignment-task-pyby.vercel.app/",
+      "/logout": "https://backend-assignment-task-pyby.vercel.app/",
     },
   },
 });
