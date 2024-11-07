@@ -23,9 +23,9 @@ const userModel = require("./models/userModel");
 const connectDB = require("./db/userDB");
 connectDB();
 
-// app.get("/", (req, res) => {
-//   res.send("Jai Shree Ram");
-// });
+app.get("/", (req, res) => {
+  res.send("Jai Shree Ram");
+});
 
 app.post("/registeruser", async (req, res) => {
   const { username, email, password } = req.body;
