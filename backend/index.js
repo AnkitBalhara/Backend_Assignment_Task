@@ -14,7 +14,7 @@ app.use(
   })
 );
 
-app.use(express.static("dist"))
+// app.use(express.static("dist"))
 
 app.use(cookieParser());
 app.use(express.json());
