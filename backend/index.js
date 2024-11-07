@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://backend-assignment-task.vercel.app/",
     methods: "GET,POST",
     credentials: true, // This must be enabled to allow cookies to be sent and received
   })
