@@ -11,11 +11,13 @@ const isSignedIn = require("./middleware/IsSignedIn");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://backend-assignment-task-pyby.vercel.app",
     methods: "GET,POST",
     credentials: true, // This must be enabled to allow cookies to be sent and received
   })
 );
+
+// app.use(express.static("dist"))
 
 app.use(cookieParser());
 app.use(express.json());

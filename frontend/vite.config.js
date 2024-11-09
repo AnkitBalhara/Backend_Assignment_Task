@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/login/findUser": "http://localhost:3000",
-      "/registeruser": "http://localhost:3000",
-      "/profilepage": "http://localhost:3000",
-      "/logout": "http://localhost:3000",
+      "/login/findUser": "https://backend-assignment-task-pyby.vercel.app",
+      "/registeruser": "https://backend-assignment-task-pyby.vercel.app",
+      "/profilepage": "https://backend-assignment-task-pyby.vercel.app",
+      "/logout": "https://backend-assignment-task-pyby.vercel.app",
     },
   },
 });

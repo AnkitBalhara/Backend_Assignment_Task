@@ -1,5 +1,4 @@
 # User Management and Location Tracking Application
-
 This project is a full-stack application that provides a user registration and login system, user profile management, and real-time location tracking functionality. It utilizes a React frontend, Express.js backend, MongoDB for data storage, and Socket.IO for real-time updates.
 
 ## Features
@@ -29,8 +28,8 @@ This project is a full-stack application that provides a user registration and l
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AnkitBalhara/your-repo-name
-   cd your-repo-name
+   https://github.com/AnkitBalhara/Backend_Assignment_Task
+   
 ### Install dependencies for both frontend and backend:
 
 bash
@@ -115,3 +114,12 @@ arduino
 Copy code
 
 This README outlines the features, installation steps, structure, and basic usage of the project, providing clear documentation for new users.
+
+
+![Screenshot (53)](https://github.com/user-attachments/assets/d02d68ff-3c85-4b08-be03-1839fb5ec699)
+
+![Screenshot (55)](https://github.com/user-attachments/assets/47c79eba-a47c-46f9-a3ef-d37d7e3fbf8a)
+
+
+![Screenshot (54)](https://github.com/user-attachments/assets/187a18e9-5e20-4910-827f-5eb54b05d27c)
+
